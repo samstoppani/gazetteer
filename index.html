@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+
+        <title>Gazetteer</title>
+        <meta name="description" content="Mobile friendly app to determine current location info, including currency exchange rate and weather forecast.">
+        <meta name="author" content="Sam Stoppani">
+        <link  rel="shortcut icon" type="image/svg" href="images/favicon.svg" alt="Favicon"/>
+
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+		integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin=""/>
+        <!-- <link rel="stylesheet" href="../node_modules/leaflet.markercluster/dist/MarkerCluster.css">
+        <link rel="stylesheet" href="../node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css"> -->
+        <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.css">
+        <link rel="stylesheet" href="node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css">
+
+        <!-- <link rel="stylesheet" href="libs/css/leaflet.extra-markers.min.css"> -->
+
+        <link rel="stylesheet" href="libs/css/main.css">
+        
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+    </head>
+
+    <body>
+
+        <nav class="navbar col-12 col-md-5 col-lg-4 p-2">
+
+            <div class="col-6 col-md-12 d-flex justify-content-center">
+                <i class="fas fa-globe-europe fa-3x my-auto"></i>
+                <h1 id="title">Gazetteer</h1>
+            </div>
+            
+            <div class="col-6 col-md-12 pr-0 d-flex justify-content-between">
+                <select name="country" id="chooseCountry">
+                </select>
+            </div>
+    
+        </nav>
+
+        <div id="loader-wrapper" class="d-flex align-items-center justify-content-center">
+            <i class="loader fas fa-globe-europe fa-5x"></i>
+        </div>
+
+        <div id="mymap" onmousedown="closeTab()"></div>
+
+        <div class="col-12 col-md-5 col-lg-4 p-0" id="footer">
+            <div class="row m-0">
+                <button id="infoBtn" class="button col-4 tabLinks" onclick="openTab(event, 'info')"><h2>Info</h2></button>
+                <button id="weatherBtn" class="button col-4 tabLinks" onclick="openTab(event, 'weather')"><h2>Weather</h2></button>
+                <button id="exchangeBtn" class="button col-4 tabLinks" onclick="openTab(event, 'exchange')"><h2>Exchange</h2></button>
+            </div>
+
+            <section id="info" class="tabContent" style="display: block;">
+                <div class="row align-items-center" style="height: 40%;">
+                    <h3 class="col-6 d-flex justify-content-center align-items-center country"></h3>
+                    <!-- <i class="col d-flex justify-content-center align-items-center" id="flag"></i> -->
+                    <img class="col-6 d-flex justify-content-center align-items-center" id="flag"></img>
+
+                </div>
+                <div class="row align-items-center">
+                    <h3 class="col d-flex justify-content-end m-0">Capital City:</h3>
+                    <span class="col d-flex justify-content-start infoResult" id="city"></span>
+                </div>
+                <div class="row align-items-center">
+                    <h3 class="col d-flex justify-content-end m-0" style="text-align: right;">Country Population:</h3>
+                    <span class="col d-flex justify-content-start infoResult" id="population"></span>
+                </div>
+                <div class="row align-items-center">
+                    <h3 class="col d-flex justify-content-end m-0" style="text-align: right;">Area:</h3>
+                    <span class="col d-flex justify-content-start infoResult"><span id="area"></span><span>km<sup>2</sup></span></span>
+                </div>
+                <div class="row align-items-center">
+                    <h3 class="col d-flex justify-content-end m-0">Currency:</h3>
+                    <span class="col d-flex justify-content-start infoResult"><span id="currencyName"></span> <span id="currencySymbol"></span></span> 
+                </div>
+                <div class="row align-items-center">
+                    <h3 class="col-12 d-flex justify-content-start m-0 pb-3"><u>Summary</u></h3>
+                    <br>
+                    <p class="col-12 d-flex justify-content-start infoResult" id="countrySummary"></p> 
+                    <a class="col-12 d-flex justify-content-center infoResult pb-3" id="wikiLink" href="" target="_blank"></a> 
+                    <br>
+                </div>
+            </section>
+
+            <section id="weather" class="tabContent">
+                <div id="weatherLocation" class="row m-0">
+                    <h3 class="col d-flex justify-content-center align-items-center m-0 country"></h3>
+                </div>
+
+                    <div class="row m-0" id="weatherTable">
+
+                            <div class="weatherColumn col-3 col-md-6" id="day1">
+                                <div>Today</div>
+                                <div class="weatherIcon"><img></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <div class="weatherColumn col-3 col-md-6" id="day2">
+                                <div>Tomorrow</div>
+                                <div class="weatherIcon"><img></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                    
+                            <div class="weatherColumn col-3 col-md-6" id="day3">
+                                <div id="thirdDay"></div>
+                                <div class="weatherIcon"><img></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <div class="weatherColumn col-3 col-md-6" id="day4">
+                                <div id="fourthDay"></div>
+                                <div class="weatherIcon"><img></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+
+                    </div>
+                
+            </section>
+
+            <section id="exchange" class="tabContent">
+                <div class="row py-1 px-4">
+                    <h3 class="col-4 d-flex justify-content-end align-items-center">Amount:</h3>
+                    <input class="col-8 d-flex justify-content-center align-items-center exchangeInput" value="100" id="exchangeAmount"></input>
+                </div>
+                <div class="row py-1 px-4">
+                    <h3 class="col-4 d-flex justify-content-end align-items-center">From:</h3>
+                    <select class="col-8 d-flex justify-content-center align-items-center exchangeInput currencyDropdown" id="fromCurrency">
+                    </select>
+                </div>
+                <div class="row py-1 px-4">
+                    <h3 class="col-4 d-flex justify-content-end align-items-center">To:</h3>
+                    <select class="col-8 d-flex justify-content-center align-items-center exchangeInput currencyDropdown" id="toCurrency">
+                    </select>
+                </div>
+                <div class="row py-1 px-4">
+                    <button class="col d-flex justify-content-center align-items-center" id="convertBtn">Convert</button>
+                    <span class="col d-flex justify-content-center align-items-center">
+                        <span id="toCurrencySymbol"></span>
+                        <span id="exchangeRecieved"></span>
+                    </span>
+                </div>
+            </section>
+
+        </div>
+
+        <script type="text/javascript" src="libs/js/jquery-2.2.3.min.js"></script>
+        <script src="https://use.fontawesome.com/releases/v5.13.0/js/all.js" data-auto-replace-svg="nest"></script>
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+        <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/src/MarkerCluster.js"> -->
+        <!-- <script src="libs/js/leaflet.extra-markers.min.js"></script> -->
+
+        <script src="node_modules/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+
+
+        <script type="module" src="libs/js/iso3to2.js"></script>
+        <script src="libs/js/main.js"></script>
+
+
+
+		
+    </body>
+
+</html>

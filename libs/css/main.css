@@ -1,0 +1,386 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+@media (min-width: 768px) {
+  nav, header {
+    height: 30vh !important;
+  }
+  #title {
+    font-size: 2em !important;
+  }
+  #chooseCountry {
+    font-size: inherit !important;
+  }
+  #map {
+    top: 0 !important;
+    right: 0 !important;
+    height: 100% !important;
+    width: 58.33333333% !important;
+  }
+  #footer {
+    height: 100% !important;
+    top: 30vh !important;
+  }
+  .expandFooter {
+    -webkit-animation: none !important;
+            animation: none !important;
+  }
+  .collapseFooter {
+    -webkit-animation: none !important;
+            animation: none !important;
+  }
+  .tabContent {
+    height: calc(100% - 50px - 30vh) !important;
+  }
+  #info .country, #weatherLocation .country {
+    font-size: 1.5em !important;
+  }
+  .infoResult {
+    font-size: 1em !important;
+  }
+  #info > div > h3 {
+    font-size: 1em !important;
+  }
+  .weatherColumn {
+    height: 50% !important;
+  }
+  .weatherColumn div {
+    font-size: 1.2em !important;
+  }
+  #exchange > div {
+    padding: 5% !important;
+  }
+  #exchangeRecieved, #toCurrencySymbol {
+    font-size: 2em !important;
+  }
+}
+
+@media (min-width: 992px) {
+  #map {
+    width: 66.666666666667% !important;
+  }
+}
+
+html, header, body {
+  font-family: 'Montserrat' !important;
+}
+
+body {
+  height: 85vh;
+}
+
+#loader-wrapper {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #2A9D8F;
+  z-index: 3;
+}
+
+.loader {
+  color: #EEF8FF;
+  -webkit-animation: loading 5s infinite;
+          animation: loading 5s infinite;
+}
+
+@-webkit-keyframes loading {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes loading {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+nav, header {
+  height: 15vh;
+  position: fixed;
+  z-index: 2;
+  background-color: #2A9D8F;
+  color: #EEF8FF;
+}
+
+#title {
+  font-size: 1.5em;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  margin: 0;
+}
+
+#chooseCountry {
+  border: 2px solid #EEF8FF;
+  border-radius: 5px;
+  width: 100%;
+  text-align: center;
+  font-size: 0.65em;
+  text-align-last: center;
+}
+
+#submitBtn {
+  background-color: #30343F;
+  color: #EEF8FF;
+}
+
+#submitBtn:hover, #submitBtn:focus {
+  border: 1px solid black !important;
+}
+
+#map {
+  position: absolute;
+  z-index: 0;
+  background-color: #EEF8FF;
+  top: 15vh;
+  height: 85vh;
+  width: 100%;
+}
+
+#footer {
+  position: fixed;
+  display: block;
+  width: 100%;
+  height: 40%;
+  bottom: calc(50px - 40%);
+  left: 0;
+  right: 0;
+  z-index: 2;
+}
+
+.expandFooter {
+  -webkit-animation: expandFooter 3s 1;
+          animation: expandFooter 3s 1;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes expandFooter {
+  from {
+  }
+  to {
+    bottom: 0%;
+  }
+}
+
+@keyframes expandFooter {
+  from {
+  }
+  to {
+    bottom: 0%;
+  }
+}
+
+.collapseFooter {
+  -webkit-animation: collapseFooter 3s 1;
+          animation: collapseFooter 3s 1;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes collapseFooter {
+  from {
+    bottom: 0%;
+  }
+  to {
+    bottom: calc(50px - 40%);
+  }
+}
+
+@keyframes collapseFooter {
+  from {
+    bottom: 0%;
+  }
+  to {
+    bottom: calc(50px - 40%);
+  }
+}
+
+.button {
+  height: 50px;
+}
+
+h2 {
+  font-size: 1em !important;
+}
+
+#infoBtn {
+  background-color: #EEF8FF;
+  color: #30343F;
+  border: 1px solid #EEF8FF;
+  margin: 0;
+}
+
+#weatherBtn {
+  background-color: #30343F;
+  color: #EEF8FF;
+  border: 1px solid #30343F;
+}
+
+#exchangeBtn {
+  background-color: #F9DB6D;
+  color: #30343F;
+  border: 1px solid #F9DB6D;
+}
+
+.tabContent {
+  height: calc(100% - 50px);
+}
+
+#info {
+  display: none;
+  background-color: #EEF8FF;
+  color: #30343F;
+  overflow-y: scroll;
+}
+
+#info > div {
+  height: 15%;
+  width: 100%;
+  margin: 0;
+}
+
+#info > div > h3, .infoResult {
+  font-size: 0.8em;
+}
+
+.country {
+  font-size: 1em;
+  font-weight: 900;
+  text-align: center;
+}
+
+#flag {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
+  padding: 10px;
+}
+
+#wikiLink {
+  word-break: break-all;
+}
+
+#weather {
+  display: none;
+  background-color: #30343F;
+  color: #EEF8FF;
+}
+
+#weatherLocation {
+  height: 30%;
+  width: 100%;
+}
+
+#weatherTable {
+  height: 70%;
+  width: 100%;
+  text-align: center;
+}
+
+.weatherColumn {
+  height: 100%;
+  border: 2px solid #2A9D8F;
+  padding: 0;
+}
+
+.weatherColumn div {
+  height: 15%;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 1em;
+}
+
+.weatherColumn div:first-child {
+  font-size: 0.9em;
+}
+
+.weatherIcon {
+  height: 55% !important;
+}
+
+.weatherIcon img {
+  height: 100%;
+}
+
+#exchange {
+  display: none;
+  background-color: #F9DB6D;
+  color: #30343F;
+}
+
+#exchange > div {
+  height: 25%;
+}
+
+.exchangeInput {
+  text-align: center;
+  text-align-last: center;
+  border: 0px solid transparent;
+  border-radius: 10px;
+}
+
+#convertBtn {
+  font-size: 1em;
+  background-color: #30343F;
+  color: #F9DB6D;
+  border: 0 solid transparent;
+  border-radius: 10px;
+}
+
+#exchange > div > h3 {
+  font-size: 1em;
+}
+
+#exchangeRecieved, #toCurrencySymbol {
+  font-size: 1.5em;
+}
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+a:focus,
+a:active,
+a:hover,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+  outline: 0px !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+  border: 0 solid transparent !important;
+}
+
+.leaflet-popup-tip {
+  width: 0px;
+  height: 0px;
+}
+/*# sourceMappingURL=main.css.map */
